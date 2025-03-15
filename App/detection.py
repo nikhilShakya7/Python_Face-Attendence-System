@@ -25,6 +25,7 @@ model.read("../Trained_Model/trained_model.xml")  # Load the trained model from 
 
 # Create the face classifier
 face_classifier = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+#face_classifier = cv2.CascadeClassifier("App/haarcascade_frontalface_default.xml")
 
 # Start video capture
 cap = cv2.VideoCapture(0)
@@ -46,7 +47,7 @@ while True:
         confidence = int(100 * (1 - (confidence / 300)))  # Convert confidence to percentage
 
         # Display the result
-        if confidence > 82:  # Confidence threshold for recognition
+        if confidence > 80:  # Confidence threshold for recognition
             student_name = get_student_name(student_id)  # Fetch name from database
             cv2.putText(frame, f"Name: {student_name} ({confidence}%)", (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
         else:

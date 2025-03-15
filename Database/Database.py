@@ -7,7 +7,7 @@ cursor = conn.cursor()
 #  Create table
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS attendance (
-        student_id TEXT UNIQUE,
+        student_id INT UNIQUE,
         Name TEXT,
         Status TEXT DEFAULT 'Absent',
         Course TEXT,

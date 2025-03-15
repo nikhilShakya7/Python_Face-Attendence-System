@@ -13,14 +13,16 @@ def capture_images(student_id, name):
     cap = cv2.VideoCapture(0)
     count = 0
 
-    while count < 30:
+    while count < 50:
         ret, frame = cap.read()
         if not ret:
             print("Failed to grab frame.")
             break
 
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        face_classifier = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+        #face_classifier = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+        face_classifier = cv2.CascadeClassifier("App/haarcascade_frontalface_default.xml")
+
         faces = face_classifier.detectMultiScale(gray, 1.3, 5)
 
         for (x, y, w, h) in faces:
@@ -31,7 +33,8 @@ def capture_images(student_id, name):
             count += 1
 
         cv2.imshow("Capturing Images", frame)
-        if cv2.waitKey(1) == ord('q'):  # Press 'q' to exit early
+        if cv2.waitKey(100) == ("q"
+                                "") or count ==50:
             break
 
     cap.release()
