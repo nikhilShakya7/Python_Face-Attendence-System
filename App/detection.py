@@ -4,7 +4,7 @@ import sqlite3
 
 # Function to fetch the student name from the database
 def get_student_name(student_id):
-    conn = sqlite3.connect('../Database/attendance.db')  # Connect to your database (change the path if needed)
+    conn = sqlite3.connect('../Database/attendance.db')
     cursor = conn.cursor()
 
     # Query to fetch student name based on ID
@@ -13,15 +13,14 @@ def get_student_name(student_id):
 
     conn.close()
 
-    # If the student exists, return their name, otherwise return "Unknown"
     if row:
-        return row[0]  # Name is in the first column
+        return row[0]
     else:
         return "Unknown"
 
 # Load the trained model
 model = cv2.face.LBPHFaceRecognizer_create()
-model.read("../Trained_Model/trained_model.xml")  # Load the trained model from the XML file
+model.read("../Trained_Model/trained_model.xml")
 
 # Create the face classifier
 face_classifier = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
@@ -57,7 +56,7 @@ while True:
 
     cv2.imshow("Face Recognition", frame)
 
-    if cv2.waitKey(1) == 13:  # Press Enter to exit
+    if cv2.waitKey(1) == 13: 
         break
 
 cap.release()

@@ -5,7 +5,6 @@ from tkinter import messagebox, ttk
 import subprocess
 import threading
 import cv2
-
 face_classifier = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
 
@@ -14,6 +13,8 @@ def capture_images(student_id, name):
     os.makedirs(data_path, exist_ok=True)
 
     cap = cv2.VideoCapture(0)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)  # Set the frame width to 1280
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
     count = 0
 
     while count < 50:
@@ -63,37 +64,45 @@ def open_add_student():
 
     add_window = tk.Toplevel()
     add_window.title("Add Student")
-    add_window.geometry("400x350")
-    add_window.configure(bg="#f0f0f0")
+    add_window.geometry("1920x950")
+
+    add_window.configure(bg="#63C5DA")
 
 
-    title_label = tk.Label(add_window, text="Add Student", font=("Arial", 16, "bold"), bg="#f0f0f0", fg="#333")
-    title_label.pack(pady=10)
+    form_frame = ttk.Frame(add_window, padding=30, borderwidth=1)
+    form_frame.place(relx=0.5, rely=0.5, anchor="center")
 
+    # Expand column width
+    form_frame.grid_columnconfigure(0, weight=1)
+    form_frame.grid_columnconfigure(1, weight=2)
 
+    # Title Label
+    title_label = tk.Label(form_frame, text="Add Student", font=("Arial", 18, "bold"), fg="#333")
+    title_label.grid(row=0, column=0, columnspan=2, pady=20)
+
+    # Style for better appearance
     style = ttk.Style()
-    style.configure("TLabel", font=("Arial", 12), background="#f0f0f0")
-    style.configure("TEntry", font=("Arial", 12), padding=5)
-    style.configure("TButton", font=("Arial", 12, "bold"), padding=6)
+    style.configure("TLabel", font=("Arial", 14))
+    style.configure("TEntry", font=("Arial", 14), padding=8)
+    style.configure("TButton", font=("Arial", 14, "bold"), padding=10)
 
-
-    form_frame = ttk.Frame(add_window, padding=10)
-    form_frame.pack(pady=10, padx=20, fill="both", expand=True)
-
-    ttk.Label(form_frame, text="Student ID:").grid(row=0, column=0, sticky="w", padx=5, pady=5)
+    # Student ID
+    ttk.Label(form_frame, text="Student ID:").grid(row=1, column=0, sticky="w", padx=10, pady=10)
     id_entry = ttk.Entry(form_frame)
-    id_entry.grid(row=0, column=1, padx=5, pady=5, ipadx=5)
+    id_entry.grid(row=1, column=1, padx=10, pady=10, ipadx=30, ipady=5)
 
-    ttk.Label(form_frame, text="Name:").grid(row=1, column=0, sticky="w", padx=5, pady=5)
+    # Name
+    ttk.Label(form_frame, text="Name:").grid(row=2, column=0, sticky="w", padx=10, pady=10)
     name_entry = ttk.Entry(form_frame)
-    name_entry.grid(row=1, column=1, padx=5, pady=5, ipadx=5)
+    name_entry.grid(row=2, column=1, padx=10, pady=10, ipadx=30, ipady=5)
 
-    ttk.Label(form_frame, text="Course:").grid(row=2, column=0, sticky="w", padx=5, pady=5)
+    # Course
+    ttk.Label(form_frame, text="Course:").grid(row=3, column=0, sticky="w", padx=10, pady=10)
     course_entry = ttk.Entry(form_frame)
-    course_entry.grid(row=2, column=1, padx=5, pady=5, ipadx=5)
+    course_entry.grid(row=3, column=1, padx=10, pady=10, ipadx=30, ipady=5)
 
+    # Function to save student
     def save_student_to_db():
-        """Gets user input and starts the student addition process."""
         student_id = id_entry.get().strip()
         name = name_entry.get().strip()
         course = course_entry.get().strip()
@@ -108,14 +117,15 @@ def open_add_student():
         else:
             messagebox.showerror("Error", "Please fill all fields.")
 
-    # Button to add student & capture images
-    ttk.Button(add_window, text="Add Student & Capture Photo", command=save_student_to_db).pack(pady=15)
+    # Larger Button
+    ttk.Button(form_frame, text="Add Student & Capture Photo", command=save_student_to_db)\
+        .grid(row=4, column=0, columnspan=2, pady=20, ipadx=20, ipady=10)
 
     add_window.mainloop()
 
 
 if __name__ == "__main__":
     root = tk.Tk()
-    root.withdraw()  # Hide the main window
+    root.withdraw()
     open_add_student()
     root.mainloop()

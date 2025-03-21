@@ -6,11 +6,11 @@ def capture_images(student_id, name):
         print("Error: Student ID is required.")
         return
 
-    # Use only the student ID for the folder name
     data_path = f"../Dataset/{student_id}"
-    os.makedirs(data_path, exist_ok=True)  # Ensure the directory exists
-
+    os.makedirs(data_path, exist_ok=True)
     cap = cv2.VideoCapture(0)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
     count = 0
 
     while count < 50:
@@ -33,8 +33,7 @@ def capture_images(student_id, name):
             count += 1
 
         cv2.imshow("Capturing Images", frame)
-        if cv2.waitKey(100) == ("q"
-                                "") or count ==50:
+        if cv2.waitKey(100) or count ==50:
             break
 
     cap.release()

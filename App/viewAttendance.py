@@ -16,7 +16,8 @@ def view_attendance():
     tree.heading("Status", text="Status")
     tree.heading("Timestamp", text="Timestamp")
 
-    tree.column("ID", width=80)
+    tree.column("ID", width=80
+                )
     tree.column("Name", width=150)
     tree.column("Course", width=100)
     tree.column("Status", width=100)
