@@ -5,16 +5,20 @@ from tkinter import messagebox, ttk
 import subprocess
 import threading
 import cv2
-face_classifier = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+
+#face_classifier = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+#face_classifier = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_alt2.xml")
+face_classifier = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 
 
 def capture_images(student_id, name):
     data_path = f"../Dataset/{student_id}"
     os.makedirs(data_path, exist_ok=True)
 
+
     cap = cv2.VideoCapture(0)
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)  # Set the frame width to 1280
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 600)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 600)
     count = 0
 
     while count < 50:
@@ -22,6 +26,7 @@ def capture_images(student_id, name):
         if not ret:
             print("Failed to grab frame.")
             break
+        frame = cv2.flip(frame, 1)
 
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         faces = face_classifier.detectMultiScale(gray, 1.3, 5)
@@ -55,6 +60,7 @@ def add_student(student_id, name, course):
         capture_images(student_id, name)
         subprocess.run([r"E:\8th sem\New folder\PythonProject1\.venv\Scripts\python.exe", "train.py"])
 
+
         print(f"Student {name} added successfully!")
     except sqlite3.Error as e:
         print(f"Database error: {e}")
@@ -80,14 +86,13 @@ def open_add_student():
     title_label = tk.Label(form_frame, text="Add Student", font=("Arial", 18, "bold"), fg="#333")
     title_label.grid(row=0, column=0, columnspan=2, pady=20)
 
-    # Style for better appearance
     style = ttk.Style()
     style.configure("TLabel", font=("Arial", 14))
     style.configure("TEntry", font=("Arial", 14), padding=8)
     style.configure("TButton", font=("Arial", 14, "bold"), padding=10)
 
     # Student ID
-    ttk.Label(form_frame, text="Student ID:").grid(row=1, column=0, sticky="w", padx=10, pady=10)
+    ttk.Label(form_frame, text="Student ID:").grid(row=1, column=0, sticky="w", padx=10, pady=10, ipady=10)
     id_entry = ttk.Entry(form_frame)
     id_entry.grid(row=1, column=1, padx=10, pady=10, ipadx=30, ipady=5)
 
@@ -117,7 +122,6 @@ def open_add_student():
         else:
             messagebox.showerror("Error", "Please fill all fields.")
 
-    # Larger Button
     ttk.Button(form_frame, text="Add Student & Capture Photo", command=save_student_to_db)\
         .grid(row=4, column=0, columnspan=2, pady=20, ipadx=20, ipady=10)
 

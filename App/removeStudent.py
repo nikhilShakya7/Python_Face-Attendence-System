@@ -16,8 +16,11 @@ def remove_student(student_id):
             messagebox.showerror("Error", "Student ID not found.")
             return
 
-        # Delete student from database
         cursor.execute("DELETE FROM attendance WHERE student_id = ?", (student_id,))
+        cursor.execute("DELETE FROM daily_attendance WHERE student_id = ?", (student_id,))
+        cursor.execute("DELETE FROM students WHERE student_id = ?", (student_id,))
+
+
         conn.commit()
         conn.close()
 
@@ -52,7 +55,6 @@ def open_remove_student():
     title_label = tk.Label(form_frame, text="Remove Student", font=("Arial", 20, "bold"), fg="#333")
     title_label.grid(row=0, column=0, columnspan=2, pady=15)
 
-    # Student ID Label and Entry
     ttk.Label(form_frame, text="Student ID:").grid(row=1, column=0, sticky="w", padx=10, pady=10)
     id_entry = ttk.Entry(form_frame)
     id_entry.grid(row=1, column=1, padx=10, pady=10, ipadx=30, ipady=5)
@@ -68,6 +70,7 @@ def open_remove_student():
     ttk.Button(form_frame, text="Remove Student", command=delete_student).grid(row=2, column=0, columnspan=2, pady=20, ipadx=20, ipady=10)
 
     remove_window.mainloop()
+
 
 
 if __name__ == "__main__":
