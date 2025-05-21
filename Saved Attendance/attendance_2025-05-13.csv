@@ -1,0 +1,12 @@
+Attendance Report - 2025-05-13
+
+Student ID,Name,Course,Status,Date,Time
+102,Nikhil Shakya,Science,Present,2025-05-13,N/A
+105,Samikchhya,Management,Absent,N/A,N/A
+106,Syaabrose,Accounts,Absent,N/A,N/A
+
+SUMMARY STATISTICS
+Total Students:,3
+Present:,1
+Absent:,2
+Attendance Rate:,33.3%

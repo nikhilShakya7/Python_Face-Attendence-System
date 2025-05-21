@@ -1,0 +1,13 @@
+Attendance Report - 2025-05-07
+
+Student ID,Name,Course,Status,Date,Time
+101,Nik,Computer,Absent,N/A,N/A
+102,Nikhil Shakya,Machine Learning,Present,2025-05-07,N/A
+105,Samikchhya,Management,Absent,N/A,N/A
+106,Syaabrose,Accounts,Absent,N/A,N/A
+
+SUMMARY STATISTICS
+Total Students:,4
+Present:,1
+Absent:,3
+Attendance Rate:,25.0%
